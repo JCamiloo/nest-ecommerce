@@ -1,8 +1,8 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { Order } from '../../entities/order';
 import { UserEntity } from '../../entities/user.entity';
 import { ProductsService } from '../../../products/services/products/products.service';
+import { OrderEntity } from '../../entities/order.entity';
 import config from '../../../config';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class UsersService {
     return product;
   }
 
-  getOrdersByUser(id: number): Order {
+  getOrdersByUser(id: number): OrderEntity {
     const user = this.findById(id);
 
     return {

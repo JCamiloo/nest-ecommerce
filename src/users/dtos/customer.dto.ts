@@ -1,5 +1,5 @@
+import { PartialType } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsPhoneNumber } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateCustomerDto {
   @IsString()
