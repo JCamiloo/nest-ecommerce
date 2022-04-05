@@ -1,27 +1,24 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import * as Joi from 'joi';
 
 import { ProductsModule } from './products/products.module';
+import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { environments } from './environments';
-import config from './config';
+import { envSchema } from './config/envSchema.config';
+import config from './config/env.config';
 
 @Module({
   imports: [
+    DatabaseModule,
     ProductsModule,
     UsersModule,
     ConfigModule.forRoot({
       envFilePath: environments[process.env.NODE_ENV] || 'dev.env',
       load: [config],
       isGlobal: true,
-      validationSchema: Joi.object({
-        PORT: Joi.number().required(),
-        API_KEY: Joi.number().required(),
-        DATABASE_NAME: Joi.string().required(),
-        DATABASE_PORT: Joi.number().required(),
-      })
-    })
+      validationSchema: envSchema
+    }),
   ],
 })
 export class AppModule {}

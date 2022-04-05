@@ -3,7 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { UserEntity } from '../../entities/user.entity';
 import { ProductsService } from '../../../products/services/products/products.service';
 import { OrderEntity } from '../../entities/order.entity';
-import config from '../../../config';
+import config from '../../../config/env.config';
 
 @Injectable()
 export class UsersService {

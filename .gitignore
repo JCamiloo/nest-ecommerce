@@ -1,5 +1,6 @@
 package-lock.json
 *.env
+/postgres_data
 
 # compiled output
 /dist
