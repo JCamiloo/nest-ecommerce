@@ -4,6 +4,7 @@ import { ConfigType } from '@nestjs/config';
 import { Client } from 'pg';
 
 import config from '../config/env.config';
+import { Product } from '../products/entities/product.entity';
 
 @Global()
 @Module({
@@ -15,7 +16,10 @@ import config from '../config/env.config';
           ...configService.database,
           type: 'postgres',
           username: configService.database.user,
-          database: configService.database.name
+          database: configService.database.name,
+          synchronize: true,
+          autoLoadEntities: true,
+          entities: [Product]
         }
       }
     })

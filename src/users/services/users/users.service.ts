@@ -1,13 +1,13 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { UserEntity } from '../../entities/user.entity';
+import { User } from '../../entities/user.entity';
 import { ProductsService } from '../../../products/services/products/products.service';
-import { OrderEntity } from '../../entities/order.entity';
+import { Order } from '../../entities/order.entity';
 import config from '../../../config/env.config';
 
 @Injectable()
 export class UsersService {
-  private users: UserEntity[] = [
+  private users: User[] = [
     {
       id: 1,
       email: 'test@mail.com',
@@ -31,13 +31,13 @@ export class UsersService {
     return product;
   }
 
-  getOrdersByUser(id: number): OrderEntity {
+  async getOrdersByUser(id: number): Promise<Order> {
     const user = this.findById(id);
 
     return {
       date: new Date(),
       user,
-      products: this.productsService.findAll()
+      products: await this.productsService.findAll()
     }
   }
 }

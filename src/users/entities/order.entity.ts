@@ -1,8 +1,8 @@
-import { UserEntity } from './user.entity';
-import { ProductEntity } from '../../products/entities/product.entity';
+import { User } from './user.entity';
+import { Product } from '../../products/entities/product.entity';
 
-export class OrderEntity {
+export class Order {
   date: Date;
-  user: UserEntity;
-  products: ProductEntity[];
+  user: User;
+  products: Product[];
 }

@@ -10,15 +10,15 @@ import config from './config/env.config';
 
 @Module({
   imports: [
-    DatabaseModule,
-    ProductsModule,
-    UsersModule,
     ConfigModule.forRoot({
       envFilePath: environments[process.env.NODE_ENV] || 'dev.env',
       load: [config],
       isGlobal: true,
       validationSchema: envSchema
     }),
+    UsersModule,
+    ProductsModule,
+    DatabaseModule,
   ],
 })
 export class AppModule {}
