@@ -18,4 +18,4 @@ export class CreateProductDto {
   readonly image: string;
 }
 
-export class UpdateProductDro extends PartialType(CreateProductDto) { }
+export class UpdateProductDto extends PartialType(CreateProductDto) { }
