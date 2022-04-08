@@ -6,6 +6,7 @@ import { Client } from 'pg';
 import config from '../config/env.config';
 import { Product } from '../products/entities/product.entity';
 import { Category } from '../products/entities/category.entity';
+import { Brand } from '../products/entities/brand.entity';
 
 @Global()
 @Module({
@@ -22,7 +23,7 @@ import { Category } from '../products/entities/category.entity';
           username: user,
           password,
           database: name,
-          entities: [Product, Category],
+          entities: [Product, Category, Brand],
         };
       },
     }),

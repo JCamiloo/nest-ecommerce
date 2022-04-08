@@ -2,29 +2,21 @@ import {
   Controller,
   ParseIntPipe,
   Param,
-  Delete,
   Put,
   Body,
   Post,
-  Get,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CategoriesService } from '../../services/categories/categories.service';
 import { CreateCategoryDto, UpdateCategoryDto } from '../../dtos/category.dto';
+import { GenericController } from '../../../common/controllers/generic.controller';
+import { Category } from '../../entities/category.entity';
 
 @ApiTags('categories')
 @Controller('categories')
-export class CategoriesController {
-  constructor(private categoriesService: CategoriesService) {}
-
-  @Get(':id')
-  getOne(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriesService.findOne(id);
-  }
-
-  @Get()
-  getAll() {
-    return this.categoriesService.findAll();
+export class CategoriesController extends GenericController<Category> {
+  constructor(private categoriesService: CategoriesService) {
+    super(categoriesService);
   }
 
   @Post()
@@ -38,10 +30,5 @@ export class CategoriesController {
     @Body() payload: UpdateCategoryDto,
   ) {
     return this.categoriesService.update(id, payload);
-  }
-
-  @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriesService.remove(id);
   }
 }
