@@ -14,7 +14,7 @@ import config from './config/env.config';
       envFilePath: environments[process.env.NODE_ENV] || 'dev.env',
       load: [config],
       isGlobal: true,
-      validationSchema: envSchema
+      validationSchema: envSchema,
     }),
     UsersModule,
     ProductsModule,

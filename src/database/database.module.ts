@@ -7,6 +7,7 @@ import config from '../config/env.config';
 import { Product } from '../products/entities/product.entity';
 import { Category } from '../products/entities/category.entity';
 import { Brand } from '../products/entities/brand.entity';
+import { Customer } from '../users/entities/customer.entity';
 
 @Global()
 @Module({
@@ -23,7 +24,7 @@ import { Brand } from '../products/entities/brand.entity';
           username: user,
           password,
           database: name,
-          entities: [Product, Category, Brand],
+          entities: [Product, Category, Brand, Customer],
         };
       },
     }),
