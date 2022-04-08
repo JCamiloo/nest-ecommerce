@@ -26,7 +26,7 @@ import { User } from '../users/entities/user.entity';
           password,
           database: name,
           entities: [Product, Category, Brand, Customer, User],
-          synchronize: true,
+          synchronize: false,
           autoLoadEntities: true,
         };
       },

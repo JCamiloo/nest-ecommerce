@@ -11,7 +11,7 @@ import config from './config/env.config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: environments[process.env.NODE_ENV] || 'dev.env',
+      envFilePath: environments[process.env.NODE_ENV] || '.env',
       load: [config],
       isGlobal: true,
       validationSchema: envSchema,
