@@ -5,6 +5,7 @@ import { Client } from 'pg';
 
 import config from '../config/env.config';
 import { Product } from '../products/entities/product.entity';
+import { Category } from '../products/entities/category.entity';
 
 @Global()
 @Module({
@@ -12,34 +13,41 @@ import { Product } from '../products/entities/product.entity';
     TypeOrmModule.forRootAsync({
       inject: [config.KEY],
       useFactory: (configService: ConfigType<typeof config>) => {
+        const { user, host, name, password, port } = configService.database;
+
         return {
-          ...configService.database,
           type: 'postgres',
-          username: configService.database.user,
-          database: configService.database.name,
-          synchronize: true,
-          autoLoadEntities: true,
-          entities: [Product]
-        }
-      }
-    })
+          host,
+          port,
+          username: user,
+          password,
+          database: name,
+          entities: [Product, Category],
+        };
+      },
+    }),
   ],
   providers: [
     {
       provide: 'PG',
       inject: [config.KEY],
       useFactory: (configService: ConfigType<typeof config>) => {
+        const { user, host, name, password, port } = configService.database;
+
         const client = new Client({
-          ...configService.database,
-          database: configService.database.name,
+          user,
+          host,
+          database: name,
+          password,
+          port,
         });
 
         client.connect().then(() => console.log('DATABASE CONNECTED'));
 
         return client;
-      }
-    }
+      },
+    },
   ],
-  exports: ['PG', TypeOrmModule]
+  exports: ['PG', TypeOrmModule],
 })
 export class DatabaseModule {}
