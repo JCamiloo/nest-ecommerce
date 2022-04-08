@@ -8,6 +8,7 @@ import { Product } from '../products/entities/product.entity';
 import { Category } from '../products/entities/category.entity';
 import { Brand } from '../products/entities/brand.entity';
 import { Customer } from '../users/entities/customer.entity';
+import { User } from '../users/entities/user.entity';
 
 @Global()
 @Module({
@@ -24,7 +25,9 @@ import { Customer } from '../users/entities/customer.entity';
           username: user,
           password,
           database: name,
-          entities: [Product, Category, Brand, Customer],
+          entities: [Product, Category, Brand, Customer, User],
+          synchronize: true,
+          autoLoadEntities: true,
         };
       },
     }),
