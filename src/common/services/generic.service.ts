@@ -18,7 +18,7 @@ export abstract class GenericService<Entity> {
     return item;
   }
 
-  async create(data: DeepPartial<Entity>) {
+  create(data: DeepPartial<Entity>) {
     const newItem = this.genericRepository.create(
       data as unknown as DeepPartial<Entity>,
     );
