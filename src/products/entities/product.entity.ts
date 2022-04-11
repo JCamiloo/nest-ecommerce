@@ -1,5 +1,6 @@
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { StandarEntity } from '../../common/entities/standar.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Brand } from './brand.entity';
 
 @Entity()
 export class Product extends StandarEntity {
@@ -20,4 +21,7 @@ export class Product extends StandarEntity {
 
   @Column({ type: 'varchar' })
   image: string;
+
+  @ManyToOne(() => Brand, (brand) => brand.products)
+  brand: Brand;
 }
