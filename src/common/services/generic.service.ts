@@ -12,7 +12,7 @@ export abstract class GenericService<Entity> {
     const item = await this.genericRepository.findOne(id);
 
     if (!item) {
-      throw new NotFoundException(`Item #${id} not found`);
+      throw new NotFoundException('Item not found');
     }
 
     return item;

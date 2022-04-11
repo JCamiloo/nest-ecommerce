@@ -26,16 +26,16 @@ export class ProductsService extends GenericService<Product> {
     return this.repository.find({ relations: ['brand'] });
   }
 
-  async findOne(id: number) {
-    const item = await this.repository.findOne(id, {
-      relations: ['brand', 'categories'],
+  async findOne(id: number, withRelations = false) {
+    const product = await this.repository.findOne(id, {
+      relations: withRelations ? ['brand', 'categories'] : [],
     });
 
-    if (!item) {
+    if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
 
-    return item;
+    return product;
   }
 
   async create(data: CreateProductDto) {
@@ -60,14 +60,45 @@ export class ProductsService extends GenericService<Product> {
   }
 
   async update(id: number, changes: UpdateProductDto) {
-    const product = await this.repository.findOne(id);
+    const product = await this.findOne(id, true);
 
     if (changes.brandId) {
       const brand = await this.brandRepository.findOne(changes.brandId);
       product.brand = brand;
     }
 
+    if (changes.categoriesId) {
+      const categories = await this.categoryRepository.findByIds(
+        changes.categoriesId,
+      );
+
+      product.categories = categories;
+    }
+
     this.repository.merge(product, changes);
+
+    return this.repository.save(product);
+  }
+
+  async removeProductCategory(productId: number, categoryId: number) {
+    const product = await this.findOne(productId, true);
+
+    product.categories = product.categories.filter(
+      (category) => category.id !== categoryId,
+    );
+
+    return this.repository.save(product);
+  }
+
+  async addProductCategory(productId: number, categoryId: number) {
+    const product = await this.findOne(productId, true);
+    const category = await this.categoryRepository.findOne(categoryId);
+
+    if (!category) {
+      throw new NotFoundException('Category does not exist');
+    }
+
+    product.categories.push(category);
 
     return this.repository.save(product);
   }

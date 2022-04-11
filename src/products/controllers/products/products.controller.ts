@@ -1,10 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
   Param,
   ParseIntPipe,
   Post,
   Put,
+  Get,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ProductsService } from '../../services/products/products.service';
@@ -19,6 +21,11 @@ export class ProductsController extends GenericController<Product> {
     super(productsService);
   }
 
+  @Get(':id')
+  getOne(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.findOne(id, true);
+  }
+
   @Post()
   create(@Body() payload: CreateProductDto) {
     return this.productsService.create(payload);
@@ -30,5 +37,21 @@ export class ProductsController extends GenericController<Product> {
     @Body() payload: UpdateProductDto,
   ) {
     return this.productsService.update(id, payload);
+  }
+
+  @Put(':productId/category/:categoryId')
+  addProductCategory(
+    @Param('productId', ParseIntPipe) productId: number,
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ) {
+    return this.productsService.addProductCategory(productId, categoryId);
+  }
+
+  @Delete(':productId/category/:categoryId')
+  deleteProductCategory(
+    @Param('productId', ParseIntPipe) productId: number,
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ) {
+    return this.productsService.removeProductCategory(productId, categoryId);
   }
 }
