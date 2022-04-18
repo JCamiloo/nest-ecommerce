@@ -1,8 +1,16 @@
-import { User } from './user.entity';
-import { Product } from '../../products/entities/product.entity';
+import { StandarEntity } from '../../common/entities/standar.entity';
+import { ManyToOne, PrimaryGeneratedColumn, OneToMany, Entity } from 'typeorm';
+import { Customer } from './customer.entity';
+import { OrderItem } from './order-item.entity';
 
-export class Order {
-  date: Date;
-  user: User;
-  products: Product[];
+@Entity()
+export class Order extends StandarEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @ManyToOne(() => Customer, (customer) => customer.orders)
+  customer: Customer;
+
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
+  items: OrderItem[];
 }
