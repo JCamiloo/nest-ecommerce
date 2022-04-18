@@ -6,23 +6,34 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from '../../entities/product.entity';
-import { GenericService } from '../../../common/services/generic.service';
-import { CreateProductDto, UpdateProductDto } from '../../dtos/product.dto';
+import {
+  CreateProductDto,
+  UpdateProductDto,
+  FilterProductsDto,
+} from '../../dtos/product.dto';
 import { Category } from '../../entities/category.entity';
 import { Brand } from '../../entities/brand.entity';
 
 @Injectable()
-export class ProductsService extends GenericService<Product> {
+export class ProductsService {
   constructor(
     @InjectRepository(Product) private repository: Repository<Product>,
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
     @InjectRepository(Brand) private brandRepository: Repository<Brand>,
-  ) {
-    super(repository);
-  }
+  ) {}
 
-  findAll() {
+  findAll(params: FilterProductsDto) {
+    if (params) {
+      const { limit, offset } = params;
+
+      return this.repository.find({
+        relations: ['brand'],
+        take: limit,
+        skip: offset,
+      });
+    }
+
     return this.repository.find({ relations: ['brand'] });
   }
 
@@ -78,6 +89,10 @@ export class ProductsService extends GenericService<Product> {
     this.repository.merge(product, changes);
 
     return this.repository.save(product);
+  }
+
+  remove(id: number) {
+    return this.categoryRepository.delete(id);
   }
 
   async removeProductCategory(productId: number, categoryId: number) {

@@ -7,18 +7,24 @@ import {
   Post,
   Put,
   Get,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ProductsService } from '../../services/products/products.service';
-import { CreateProductDto, UpdateProductDto } from '../../dtos/product.dto';
-import { GenericController } from '../../../common/controllers/generic.controller';
-import { Product } from '../../entities/product.entity';
+import {
+  CreateProductDto,
+  UpdateProductDto,
+  FilterProductsDto,
+} from '../../dtos/product.dto';
 
 @ApiTags('products')
 @Controller('products')
-export class ProductsController extends GenericController<Product> {
-  constructor(private productsService: ProductsService) {
-    super(productsService);
+export class ProductsController {
+  constructor(private productsService: ProductsService) {}
+
+  @Get()
+  getProducts(@Query() params: FilterProductsDto) {
+    return this.productsService.findAll(params);
   }
 
   @Get(':id')
