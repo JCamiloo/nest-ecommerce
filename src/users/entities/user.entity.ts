@@ -8,7 +8,7 @@ import {
 import { StandarEntity } from '../../common/entities/standar.entity';
 import { Customer } from './customer.entity';
 
-@Entity()
+@Entity({ name: 'users' })
 export class User extends StandarEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,6 +23,6 @@ export class User extends StandarEntity {
   role: string;
 
   @OneToOne(() => Customer, (customer) => customer.user, { nullable: true })
-  @JoinColumn()
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 }

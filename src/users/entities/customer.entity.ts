@@ -9,7 +9,7 @@ import { StandarEntity } from '../../common/entities/standar.entity';
 import { User } from './user.entity';
 import { Order } from './order.entity';
 
-@Entity()
+@Entity({ name: 'customers' })
 export class Customer extends StandarEntity {
   @PrimaryGeneratedColumn()
   id: number;

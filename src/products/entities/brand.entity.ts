@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { StandarEntity } from '../../common/entities/standar.entity';
 import { Product } from './product.entity';
 
-@Entity()
+@Entity({ name: 'brands' })
 export class Brand extends StandarEntity {
   @PrimaryGeneratedColumn()
   id: number;
