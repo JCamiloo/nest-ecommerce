@@ -25,4 +25,8 @@ export class OrderItemService {
 
     return this.repository.save(orderItem);
   }
+
+  remove(id: number) {
+    return this.repository.delete(id);
+  }
 }
