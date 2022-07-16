@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { GenericService } from '../../../common/services/generic.service';
 import { User } from '../../entities/user.entity';
-import { Repository } from 'typeorm';
 import { CustomersService } from '../customers/customers.service';
 import { CreateUserDto } from '../../dtos/user.dto';
 
@@ -23,6 +24,8 @@ export class UsersService extends GenericService<User> {
 
   async create(data: CreateUserDto) {
     const newUser = this.repository.create(data);
+    const hashedPassword = await bcrypt.hash(newUser.password, 10);
+    newUser.password = hashedPassword;
 
     if (data.customerId) {
       const customer = await this.customerService.findOne(data.customerId);
@@ -30,5 +33,9 @@ export class UsersService extends GenericService<User> {
     }
 
     return this.repository.save(newUser);
+  }
+
+  findByEmail(email: string) {
+    return this.repository.findOne({ where: { email } });
   }
 }
