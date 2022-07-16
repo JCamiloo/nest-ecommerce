@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { environments } from './environments';
 import { envSchema } from './config/envSchema.config';
+import { AuthModule } from './auth/auth.module';
 import config from './config/env.config';
 
 @Module({
@@ -19,6 +20,7 @@ import config from './config/env.config';
     UsersModule,
     ProductsModule,
     DatabaseModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
