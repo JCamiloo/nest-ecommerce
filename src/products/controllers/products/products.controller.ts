@@ -8,8 +8,10 @@ import {
   Put,
   Get,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 import { ProductsService } from '../../services/products/products.service';
 import {
   CreateProductDto,
@@ -17,6 +19,7 @@ import {
   FilterProductsDto,
 } from '../../dtos/product.dto';
 
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
