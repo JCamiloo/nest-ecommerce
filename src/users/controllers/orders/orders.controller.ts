@@ -7,14 +7,9 @@ import {
   ParseIntPipe,
   Get,
   Delete,
-  Req,
 } from '@nestjs/common';
-import { Request } from 'express';
-import { Roles } from '../../../auth/decorators/roles.decorators';
-import { Role } from '../../../auth/models/roles.model';
 import { CreateOrderDto, UpdateOrderDto } from '../../dtos/order.dto';
 import { OrdersService } from '../../services/orders/orders.service';
-import { PayloadToken } from '../../../auth/models/token.model';
 
 @Controller('orders')
 export class OrdersController {

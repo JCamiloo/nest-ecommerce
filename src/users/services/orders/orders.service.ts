@@ -57,4 +57,13 @@ export class OrdersService {
   remove(id: number) {
     return this.repository.delete(id);
   }
+
+  ordersByCustomer(customerId: number) {
+    return this.repository.find({
+      relations: ['items', 'items.product'],
+      where: {
+        customer: customerId,
+      },
+    });
+  }
 }
